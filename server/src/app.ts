@@ -1,3 +1,5 @@
+import path from "node:path";
+import { fileURLToPath } from "node:url";
 import express from "express";
 import cookieParser from "cookie-parser";
 import cors from "cors";
@@ -39,10 +41,12 @@ export function createApp() {
     res.json({ ok: true, env: isProd ? "production" : "development" });
   });
 
-  // The API has no UI — send stray browser visits to the app.
-  app.get("/", (_req, res) => {
-    res.redirect(env.CLIENT_URL);
-  });
+  // In dev the client runs on its own Vite port; send stray visits there.
+  if (!isProd) {
+    app.get("/", (_req, res) => {
+      res.redirect(env.CLIENT_URL);
+    });
+  }
 
   app.use("/api/auth", authRoutes);
   app.use("/api/clients", clientsRoutes);
@@ -51,6 +55,24 @@ export function createApp() {
   app.use("/api/settings", settingsRoutes);
   app.use("/api/dashboard", dashboardRoutes);
   app.use("/api/billing", billingRoutes);
+
+  // In production this single Node process also serves the built React app,
+  // so one deployment hosts the whole site (frontend + API on one origin).
+  if (isProd) {
+    // Compiled server lives at server/dist/app.js → client build at client/dist
+    const dirname = path.dirname(fileURLToPath(import.meta.url));
+    const clientDist = path.resolve(dirname, "../../client/dist");
+
+    app.use(express.static(clientDist));
+
+    // Client-side routing: any non-API GET falls back to index.html.
+    app.get("*", (req, res, next) => {
+      if (req.path.startsWith("/api") || req.path.startsWith("/uploads")) {
+        return next();
+      }
+      res.sendFile(path.join(clientDist, "index.html"));
+    });
+  }
 
   app.use(notFoundHandler);
   app.use(errorHandler);
