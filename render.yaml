@@ -7,7 +7,9 @@ services:
     plan: free
     region: singapore
     branch: main
-    buildCommand: npm install && npm run build
+    # --include=dev: build needs TypeScript/@types/Vite (devDependencies),
+    # which NODE_ENV=production would otherwise skip.
+    buildCommand: npm install --include=dev && npm run build
     startCommand: npm start
     healthCheckPath: /api/health
     envVars:
