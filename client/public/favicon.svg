@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <circle cx="256" cy="256" r="244" fill="#FDFAF3"/>
+  <circle cx="256" cy="256" r="236" fill="none" stroke="#AF6278" stroke-width="16"/>
+  <text x="248" y="286" text-anchor="middle"
+        font-family="'Avenir Next','Nunito','Segoe UI',system-ui,sans-serif"
+        font-weight="800" font-size="118" letter-spacing="-4">
+    <tspan fill="#332B2B">free</tspan><tspan fill="#AF6278">lancr</tspan>
+  </text>
+  <path id="arc" d="M 330 180 A 150 150 0 0 1 400 330" fill="none"/>
+  <text font-family="'Avenir Next','Nunito','Segoe UI',system-ui,sans-serif"
+        font-weight="700" font-size="30" fill="#332B2B">
+    <textPath href="#arc" startOffset="0%">Freelance Ka Boss</textPath>
+  </text>
+</svg>

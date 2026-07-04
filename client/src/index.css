@@ -1,0 +1,46 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* freelancr brand — exact palette
+       charcoal #2B2523 · mauve #A85D72 · cream #FDF8F0 */
+    --background: 37 76% 97%;
+    --foreground: 15 10% 15%;
+    --card: 40 60% 99%;
+    --card-foreground: 15 10% 15%;
+    --primary: 341 30% 51%;
+    --primary-foreground: 37 76% 98%;
+    --secondary: 341 24% 93%;
+    --secondary-foreground: 15 10% 15%;
+    --muted: 33 25% 93%;
+    --muted-foreground: 15 6% 42%;
+    --accent: 341 26% 92%;
+    --accent-foreground: 15 10% 15%;
+    --destructive: 4 60% 48%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 33 18% 87%;
+    --input: 33 18% 84%;
+    --ring: 341 30% 51%;
+    --radius: 0.75rem;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-background font-sans text-foreground antialiased;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
